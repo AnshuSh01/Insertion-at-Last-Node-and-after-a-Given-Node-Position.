@@ -1,0 +1,135 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct list
+{
+    int Info;
+    struct list*next;
+};
+
+void insertion(struct list**head,int value)
+{
+    struct list*newnode;
+    newnode=(struct list*)(malloc(sizeof(struct list)));
+    newnode->Info=value;
+    newnode->next=NULL;
+    
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else{
+        newnode->next=(*head);
+        *head=newnode;
+    }
+}
+ 
+
+void delete_at_begining(struct list**head)
+{    struct list*newnode;
+    if(*head==NULL)
+    {
+        printf("\nList is Empty\n");
+        
+    }
+    else{
+      newnode=(*head);
+      *head=newnode->next;
+        free(newnode);
+    }
+}
+void insertion_at_last_node(struct list**head,int value)
+{    
+    
+    struct list*newnode,*temp;
+    newnode=(struct list*)(malloc(sizeof(struct list)));
+    newnode->Info=value;
+    newnode->next=NULL;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else{
+        temp=*head;
+        while( temp->next!=NULL)
+        {
+           temp=(temp)->next;
+          
+        }
+         (temp)->next=newnode;
+    }
+}
+ 
+void insertion_after_given_node_position(struct list**head,int Position,int value)
+{ 
+    
+        struct list*newnode,*TEMP;
+        newnode=(struct list*)(malloc(sizeof(struct list)));
+        newnode->Info=value;
+        newnode->next=NULL;
+        TEMP=(*head);
+    while(TEMP!=NULL && TEMP->Info!=Position)
+    { 
+        (TEMP)=(TEMP)->next;
+        if(TEMP!=NULL)
+        {
+        newnode->next=(TEMP)->next;
+        (TEMP)->next=newnode;
+    }
+}
+}
+void display(struct list *head)
+{
+    if(head==NULL)
+    {
+        printf("List is Empty\n");
+        
+    }
+    else
+    {
+        while(head!=NULL)
+        {
+            printf("%d\t",head->Info);
+            head=head->next;
+        }
+    }
+}
+int main()
+{  struct list *head;
+head=NULL;
+    int choice ,value;
+     int Position;
+    printf("Enter=\n1 For insertion\n2 For Deletion at beginning\n3 For insertion at End \n4 For insertion after a Given Position\n5 For Display\n");
+    while(1)
+    {   printf(" \nEnter choice\n");
+    scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            printf("\nEnter value you want to insert\n");
+            scanf("%d",&value);
+            insertion(&head,value);
+            break;
+            case 2:
+            delete_at_begining(&head);
+            break;
+            case 3:
+            printf("\nEnter value you want to insert\n");
+            scanf("%d",&value);
+            insertion_at_last_node(&head,value);
+            break;
+            case 4:
+           
+             printf("\nEnter value you want to insert\n");
+            scanf("%d",&value);
+            printf("Enter Position=\n");
+            scanf("%d",&Position);
+            insertion_after_given_node_position(&head,Position,value);
+            break;
+            case 5:
+            display(head);
+            break;
+            case 6:
+            exit(0);
+        }
+    }
+}
